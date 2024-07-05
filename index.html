@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>Dirsh</title>
+  </head>
+  <body>
+    <div class="paper heart"></div>
+    <div class="paper image">
+      <img src="image/a1.jpeg" alt="1">
+      <p>I really love with</p>
+      <p>you Dirsh</p>
+    </div>
+    <div class="paper image">
+      <img src="image/a2.jpeg" alt="2">
+      <p>How some be so</p>
+      <p>cute</p>
+    </div>
+    <div class="paper image">
+      <img src="image/a3.jpeg" alt="3">
+      <p>You are amazing </p>
+      <p>person in my life </p>
+    </div>
+    <div class="paper image">
+      <img src="image/a4.jpeg" alt="4">
+      <p>Love you forever</p>
+    </div>
+
+    <div class="paper">
+      <p>I wan't to marry you</p>
+      <p>Want to leave with you forever</p>
+      
+    </div>
+    <div class="paper">
+      <p>You are my Favriout person</p>
+    </div>
+    <div class="paper">
+      <p>Drag the paper to move</p>
+    </div>
+    
+
+    <script>
+      let highestZ = 1;
+
+      class Paper {
+          holdingPaper = false;
+
+          prevMouseX = 0;
+          prevMouseY = 0;
+
+          mouseX = 0;
+          mouseY = 0;
+
+          velocityX = 0;
+          velocityY = 0;
+
+          currentPaperX = 0;
+          currentPaperY = 0;
+
+          init(paper) {
+              paper.addEventListener('mousedown', (e) => {
+                  console.log('mouse selected the paper element');
+
+                  this.holdingPaper = true;
+
+                  paper.style.zIndex = highestZ;
+                  highestZ += 1;
+
+                  if (e.button === 0) {
+                      this.prevMouseX = e.clientX;
+                      this.prevMouseY = e.clientY;
+
+                      console.log(this.prevMouseX);
+                      console.log(this.prevMouseY);
+                  }
+              });
+
+              document.addEventListener('mousemove', (e) => {
+                  if (this.holdingPaper) {
+                      console.log('mouse is moving');
+
+                      this.mouseX = e.clientX;
+                      this.mouseY = e.clientY;
+
+                      const dx = this.mouseX - this.prevMouseX;
+                      const dy = this.mouseY - this.prevMouseY;
+
+                      this.currentPaperX += dx;
+                      this.currentPaperY += dy;
+
+                      paper.style.transform = `translate(${this.currentPaperX}px, ${this.currentPaperY}px)`;
+
+                      this.prevMouseX = this.mouseX;
+                      this.prevMouseY = this.mouseY;
+                  }
+              });
+
+              window.addEventListener('mouseup', (e) => {
+                  console.log('mouse button is released');
+                  this.holdingPaper = false;
+              });
+          }
+      }
+
+      const papers = Array.from(document.querySelectorAll('.paper'));
+
+      papers.forEach(paper => {
+          const p = new Paper();
+          p.init(paper);
+      });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  </body>
+</html>
